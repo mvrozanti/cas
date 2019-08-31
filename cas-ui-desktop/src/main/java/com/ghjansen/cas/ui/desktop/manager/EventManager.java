@@ -79,7 +79,7 @@ public class EventManager {
 	public ActivityState activityState;
 	private ActivityState previousActivityState;
 	private Notification notification;
-	public boolean omitDiscardConfirmation = false;
+	public boolean omitDiscardConfirmation = true;
 
 	public EventManager(Main main) {
 		this.main = main;
@@ -96,8 +96,8 @@ public class EventManager {
 	
 	public void createSimulationParameter() throws InvalidSimulationParameterException, SimulationBuilderException{
 		int[] s = main.transitionsView.getStates();
-		int iterations = Integer.valueOf(main.txtIterations.getText());
-		int cells = Integer.valueOf(main.txtCells.getText());
+		int iterations = main.sliderIterations.getValue();
+		int cells = main.sliderCells.getValue();
 		UnidimensionalRuleTypeParameter ruleType = new UnidimensionalRuleTypeParameter(true);
 		UnidimensionalRuleConfigurationParameter ruleConfiguration = new UnidimensionalRuleConfigurationParameter(s[7],s[6],s[5],s[4],s[3],s[2],s[1],s[0]);
 		UnidimensionalLimitsParameter limits = new UnidimensionalLimitsParameter(cells, iterations);
@@ -211,8 +211,8 @@ public class EventManager {
 			result = (int) (result + (states[i] == 1 ? Math.pow(2, i) : 0));
 		}
 		this.skipRuleNumberEvent = true;
-		main.txtRuleNumber.setText(String.valueOf(result));
-		main.txtRuleNumber.setBackground(SystemColor.text);
+		main.sliderRuleNumber.setValue(result);
+		main.sliderRuleNumber.setBackground(SystemColor.text);
 		validator.updateStatus();
 		this.skipRuleNumberEvent = false;
 	}
@@ -220,8 +220,8 @@ public class EventManager {
 	
 	public void ruleNumberEvent(){
 		if(validator.isRuleNumberValid()){
-			int value = Integer.valueOf(main.txtRuleNumber.getText());
-			main.txtRuleNumber.setBackground(SystemColor.text);
+			int value = main.sliderRuleNumber.getValue();
+			main.sliderRuleNumber.setBackground(SystemColor.text);
 			char[] binary = Integer.toBinaryString(value).toCharArray();
 			int[] states = new int[8];
 			for(int i = 0; i < states.length; i++){
@@ -298,13 +298,13 @@ public class EventManager {
 			result = JOptionPane.YES_OPTION;
 		}
 		if(result == JOptionPane.YES_OPTION){
-			simulationController.getSimulation().setActive(false);
+//			simulationController.getSimulation().setActive(false);
 			main.simulationView.setUniverse(null);
 			simulationController = null;
 			simulationParameter = null;
-			main.txtRuleNumber.setText("0");
-			main.txtCells.setText("1");
-			main.txtIterations.setText("1");
+//			main.txtRuleNumber.setText("0");
+//			main.txtCells.setText("1");
+//			main.txtIterations.setText("1");
 			main.transitionsView.hideHighlight();
 			main.progressBar.setValue(0);
 			validator.updateStatus();
@@ -317,9 +317,9 @@ public class EventManager {
 		main.simulationView.setUniverse(null);
 		simulationController = null;
 		simulationParameter = null;
-		main.txtRuleNumber.setText("0");
-		main.txtCells.setText("1");
-		main.txtIterations.setText("1");
+		main.sliderRuleNumber.setValue(0);
+		main.sliderCells.setValue(1);
+		main.sliderIterations.setValue(1);
 		main.transitionsView.hideHighlight();
 		main.progressBar.setValue(0);
 	}
@@ -418,8 +418,8 @@ public class EventManager {
 		}
 		main.transitionsView.setStates(statesVisual);
 		transitionsEvent();
-		main.txtCells.setText(String.valueOf(this.simulationParameter.getLimitsParameter().getCells()));
-		main.txtIterations.setText(String.valueOf(this.simulationParameter.getLimitsParameter().getIterations()));
+		main.sliderCells.setValue(this.simulationParameter.getLimitsParameter().getCells());
+		main.sliderIterations.setValue(this.simulationParameter.getLimitsParameter().getIterations());
 		main.rdbtnUniqueCell.setSelected(false);
 		main.rdbtnRandom.setSelected(false);
 	}
@@ -528,9 +528,9 @@ public class EventManager {
 		switch(state){
 		case CONFIGURING_RULE:
 			main.transitionsView.setMouseEnabled(true);
-			main.txtRuleNumber.setEnabled(true);
-			main.txtCells.setEnabled(true);
-			main.txtIterations.setEnabled(true);
+			main.sliderRuleNumber.setEnabled(true);
+			main.sliderCells.setEnabled(true);
+			main.sliderIterations.setEnabled(true);
 			main.btnDiscard.setEnabled(false);
 			main.btnSimulateComplete.setEnabled(true);
 			main.btnSimulateIteration.setEnabled(true);
@@ -546,9 +546,9 @@ public class EventManager {
 			break;
 		case EXECUTING_RULE:
 			main.transitionsView.setMouseEnabled(false);
-			main.txtRuleNumber.setEnabled(false);
-			main.txtCells.setEnabled(false);
-			main.txtIterations.setEnabled(false);
+			main.sliderRuleNumber.setEnabled(false);
+			main.sliderCells.setEnabled(false);
+			main.sliderIterations.setEnabled(false);
 			main.btnDiscard.setEnabled(true);
 			main.btnSimulateComplete.setEnabled(true);
 			main.btnSimulateIteration.setEnabled(true);
@@ -563,9 +563,9 @@ public class EventManager {
 			break;
 		case ANALYSING:
 			main.transitionsView.setMouseEnabled(false);
-			main.txtRuleNumber.setEnabled(false);
-			main.txtCells.setEnabled(false);
-			main.txtIterations.setEnabled(false);
+			main.sliderRuleNumber.setEnabled(false);
+			main.sliderCells.setEnabled(false);
+			main.sliderIterations.setEnabled(false);
 			main.btnDiscard.setEnabled(true);
 			main.btnSimulateComplete.setEnabled(false);
 			main.btnSimulateIteration.setEnabled(false);

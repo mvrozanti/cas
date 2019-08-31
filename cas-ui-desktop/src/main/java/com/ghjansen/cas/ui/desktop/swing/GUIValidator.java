@@ -21,7 +21,6 @@ package com.ghjansen.cas.ui.desktop.swing;
 import java.awt.Color;
 import java.awt.SystemColor;
 
-import com.ghjansen.cas.ui.desktop.i18n.Translator;
 
 /**
  * @author Guilherme Humberto Jansen (contact.ghjansen@gmail.com)
@@ -38,65 +37,53 @@ public class GUIValidator {
 	}
 	
 	public boolean isRuleNumberValid(){
-		String value = main.txtRuleNumber.getText();
-		if(isValidPositiveInteger(value) && Integer.valueOf(value) > -1 && Integer.valueOf(value) < 256){
-			main.txtRuleNumber.setBackground(SystemColor.text);
+		int value = main.sliderRuleNumber.getValue();
+		if(value > -1 && value > -1 && value < 256){
+			main.sliderRuleNumber.setBackground(SystemColor.text);
 			updateStatus();
 			return true;
 		} else {
 			lockActivity();
-			main.txtRuleNumber.setBackground(invalidFieldColor);
+			main.sliderRuleNumber.setBackground(invalidFieldColor);
 			updateStatus();
 			return false;
 		}
 	}
 	
 	public boolean isCellsValid(){
-		String value = main.txtCells.getText();
-		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
-			main.txtCells.setBackground(SystemColor.text);
+		int value = main.sliderCells.getValue();
+		if(value > 0){
+			main.sliderCells.setBackground(SystemColor.text);
 			updateStatus();
 			return true;
 		} else {
 			lockActivity();
-			main.txtCells.setBackground(invalidFieldColor);
+			main.sliderCells.setBackground(invalidFieldColor);
 			updateStatus();
 			return false;
 		}
 	}
 	
 	public boolean isIterationsValid(){
-		String value = main.txtIterations.getText();
-		if(isValidPositiveInteger(value) && Integer.valueOf(value) > 0){
-			main.txtIterations.setBackground(SystemColor.text);
+		int value = main.sliderIterations.getValue();
+		if(value > 0){
+			main.sliderIterations.setBackground(SystemColor.text);
 			updateStatus();
 			return true;
 		} else {
 			lockActivity();
-			main.txtIterations.setBackground(invalidFieldColor);
+			main.sliderIterations.setBackground(invalidFieldColor);
 			updateStatus();
-			return false;
-		}
-	}
-	
-	private boolean isValidPositiveInteger(String value){
-		try{
-			int integer = Integer.valueOf(value);
-			if(integer > -1){
-				return true;
-			} 
-			return false;
-		} catch(Exception e){
 			return false;
 		}
 	}
 	
 	public void updateStatus(){
-		if(main.txtRuleNumber.getBackground().equals(invalidFieldColor)){
+		if(main.sliderRuleNumber.getBackground().equals(invalidFieldColor)){
 			setErrorStatus("errRuleNumber", "");
-		} else if (main.txtCells.getBackground().equals(invalidFieldColor)) {
+		} else if (main.sliderCells.getBackground().equals(invalidFieldColor)) {
 			setErrorStatus("errCells", "");
-		} else if (main.txtIterations.getBackground().equals(invalidFieldColor)){
+		} else if (main.sliderIterations.getBackground().equals(invalidFieldColor)){
 			setErrorStatus("errIterations", "");
 		} else {
 			setNormalStatus("lblStatus");

@@ -47,9 +47,9 @@ public class MainTest {
         Main main = new Main();
         main.em.omitDiscardConfirmation = true;
         for(int i = 0; i < 256; i++){
-            main.txtCells.setText(txtCells);
-            main.txtIterations.setText(txtIterations);
-            main.txtRuleNumber.setText(String.valueOf(i));
+            main.sliderCells.setText(txtCells);
+            main.sliderIterations.setText(txtIterations);
+            main.sliderRuleNumber.setText(String.valueOf(i));
             main.rdbtnRandom.setSelected(true);
             System.out.println("Simulating rule "+i);
             main.btnSimulateComplete.doClick();
@@ -72,9 +72,9 @@ public class MainTest {
         Main main = new Main();
         main.em.omitDiscardConfirmation = true;
         for(int i = 0; i < 256; i++){
-            main.txtCells.setText(txtCells);
-            main.txtIterations.setText(txtIterations);
-            main.txtRuleNumber.setText(String.valueOf(i));
+            main.sliderCells.setText(txtCells);
+            main.sliderIterations.setText(txtIterations);
+            main.sliderRuleNumber.setText(String.valueOf(i));
             System.out.println("Simulating rule "+i);
             main.btnSimulateComplete.doClick();
             Thread.sleep(msDelay);
